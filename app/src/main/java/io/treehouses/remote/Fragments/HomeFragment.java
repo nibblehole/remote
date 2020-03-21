@@ -36,6 +36,7 @@ import io.treehouses.remote.MainApplication;
 import io.treehouses.remote.Network.BluetoothChatService;
 import io.treehouses.remote.R;
 import io.treehouses.remote.adapter.ProfilesListAdapter;
+import io.treehouses.remote.bases.BaseGetNetworkRequest;
 import io.treehouses.remote.bases.BaseHomeFragment;
 import io.treehouses.remote.callback.SetDisconnect;
 
@@ -90,6 +91,7 @@ public class HomeFragment extends BaseHomeFragment implements SetDisconnect {
         connectRpiListener();
         getStarted.setOnClickListener(v -> InitialActivity.getInstance().openCallFragment(new AboutFragment()));
         testConnectionListener();
+        new BaseGetNetworkRequest().execute("https://www.npmjs.com/package/@treehouses/cli?activeTab=versions");
         return view;
     }
 
