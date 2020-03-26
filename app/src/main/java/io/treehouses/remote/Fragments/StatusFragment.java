@@ -26,6 +26,7 @@ import io.treehouses.remote.Constants;
 import io.treehouses.remote.Network.BluetoothChatService;
 import io.treehouses.remote.R;
 import io.treehouses.remote.bases.BaseFragment;
+import io.treehouses.remote.bases.BaseGetNetworkRequest;
 import io.treehouses.remote.callback.NotificationCallback;
 
 public class StatusFragment extends BaseFragment {
@@ -35,7 +36,7 @@ public class StatusFragment extends BaseFragment {
     private ImageView wifiStatus, btRPIName, rpiType, memoryStatus;
     private ImageView btStatus, ivUpgrade;
     private TextView tvStatus, tvStatus1, tvStatus2, tvStatus3, tvUpgrade, tvMemory, tvImage;
-    private Button upgrade;
+    private Button upgrade, upgradeToSpecific;
     private ProgressDialog pd;
     private Boolean updateRightNow = false;
     private BluetoothChatService mChatService = null;
@@ -84,10 +85,13 @@ public class StatusFragment extends BaseFragment {
         tvImage = view.findViewById(R.id.image_text);
         upgrade = view.findViewById(R.id.upgrade);
         upgrade.setVisibility(View.GONE);
+
+        upgradeToSpecific = view.findViewById(R.id.specificVersion);
         cardRPIName = view.findViewById(R.id.cardView);
 
         upgradeOnViewClickListener();
-        rpiNameOnViewClickListener();
+        cardRPIName.setOnClickListener(v -> showRenameDialog());
+        specificOnViewClickListener();
     }
 
     private void upgradeOnViewClickListener() {
@@ -100,8 +104,14 @@ public class StatusFragment extends BaseFragment {
         });
     }
 
-    private void rpiNameOnViewClickListener() {
-        cardRPIName.setOnClickListener(v -> showRenameDialog());
+    private void specificOnViewClickListener() {
+        upgradeToSpecific.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new BaseGetNetworkRequest(new ArrayList<>()).execute("https://www.npmjs.com/package/@treehouses/cli?activeTab=versions");
+
+            }
+        });
     }
 
     private void updateStatus(String readMessage) {

@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -91,7 +92,6 @@ public class HomeFragment extends BaseHomeFragment implements SetDisconnect {
         connectRpiListener();
         getStarted.setOnClickListener(v -> InitialActivity.getInstance().openCallFragment(new AboutFragment()));
         testConnectionListener();
-        new BaseGetNetworkRequest().execute("https://www.npmjs.com/package/@treehouses/cli?activeTab=versions");
         return view;
     }
 
